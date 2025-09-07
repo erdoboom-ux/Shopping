@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: ecommerce-api-supabase
+    env: docker
+    repo: https://github.com/YOUR_USERNAME/YOUR_REPO_NAME # <-- IMPORTANT: Change this!
+    region: oregon # Or your preferred region
+    plan: free # Or your preferred plan
+    healthCheckPath: /
+    # The build command tells Render to run prisma migrations before starting the server
+    dockerBuildCommand: "npm run build"
+    startCommand: "npx prisma migrate deploy && npm start"
+    envVars:
+      - key: DATABASE_URL
+        # This will be set manually in the Render UI
+        value: "YOUR_SUPABASE_CONNECTION_STRING_HERE" 
+      - key: JWT_SECRET
+        generateValue: true # Render will generate a random string
+      - key: NODE_ENV
+        value: production
